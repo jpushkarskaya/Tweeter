@@ -33,7 +33,7 @@ public class User {
     }
 
     public String getScreenName() {
-        return screenName;
+        return String.format("@%s", screenName);
     }
 
     public String getProfileImageUrl() {

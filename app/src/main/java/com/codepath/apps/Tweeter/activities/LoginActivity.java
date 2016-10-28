@@ -1,10 +1,12 @@
-package com.codepath.apps.Tweeter;
+package com.codepath.apps.Tweeter.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
+import com.codepath.apps.Tweeter.R;
+import com.codepath.apps.Tweeter.service.TwitterClient;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
 // Where the user will sign in to Twitter

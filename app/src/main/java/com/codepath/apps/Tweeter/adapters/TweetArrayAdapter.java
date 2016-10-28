@@ -1,4 +1,4 @@
-package com.codepath.apps.Tweeter;
+package com.codepath.apps.Tweeter.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.codepath.apps.Tweeter.R;
 import com.codepath.apps.Tweeter.models.Tweet;
 import com.squareup.picasso.Picasso;
 
@@ -36,6 +37,8 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
         holder.ivProfileImage.setImageResource(android.R.color.transparent);
         Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(holder.ivProfileImage );
         holder.tvUsername.setText(tweet.getUser().getName());
+        holder.tvHandle.setText(tweet.getUser().getScreenName());
+        holder.tvTimestamp.setText(tweet.getRelativeTime());
         holder.tvBody.setText(tweet.getBody());
         return convertView;
     }
@@ -44,11 +47,15 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
     private class ViewHolder {
         ImageView ivProfileImage;
         TextView tvUsername;
+        TextView tvHandle;
+        TextView tvTimestamp;
         TextView tvBody;
 
         public ViewHolder(View view) {
             this.ivProfileImage = (ImageView) view.findViewById(R.id.ivProfileImage);
             this.tvUsername = (TextView) view.findViewById(R.id.tvUsername);
+            this.tvHandle = (TextView) view.findViewById(R.id.tvHandle);
+            this.tvTimestamp = (TextView) view.findViewById(R.id.tvTimestamp);
             this.tvBody = (TextView) view.findViewById(R.id.tvBody);
         }
     }

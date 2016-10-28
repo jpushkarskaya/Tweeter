@@ -1,4 +1,4 @@
-package com.codepath.apps.Tweeter;
+package com.codepath.apps.Tweeter.db;
 
 import com.raizlabs.android.dbflow.annotation.Database;
 
