@@ -12,15 +12,15 @@ import com.codepath.apps.Tweeter.R;
 import com.codepath.apps.Tweeter.models.Tweet;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by epushkarskaya on 10/27/16.
  */
 public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 
-    public TweetArrayAdapter(Context context, List<Tweet> tweets) {
-        super(context, android.R.layout.simple_list_item_1, tweets);
+    public TweetArrayAdapter(Context context) {
+        super(context, android.R.layout.simple_list_item_1, new ArrayList<Tweet>());
     }
 
     @Override

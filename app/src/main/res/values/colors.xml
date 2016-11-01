@@ -3,5 +3,7 @@
 
     <color name="color_timestamp">#99a5b9</color>
     <color name="color_handle">@color/color_timestamp</color>
+    <color name="color_buttonText">#ffffff</color>
+    <color name="color_buttonBackground">#f31760ba</color>
 
 </resources>

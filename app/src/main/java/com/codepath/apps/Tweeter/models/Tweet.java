@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,15 +16,18 @@ import java.util.Locale;
 /**
  * Created by epushkarskaya on 10/27/16.
  */
-public class Tweet {
 
-    public static long newestTweetId = 1;
+public class Tweet implements Serializable{
+
     public static long oldestTweetId = Long.MAX_VALUE;
 
     private String body;
     private long uid;
     private User user;
     private String timestamp;
+
+    public Tweet() {
+    }
 
     public Tweet(JSONObject json) {
         try {
@@ -33,9 +37,6 @@ public class Tweet {
             this.timestamp = json.getString("created_at");
             if (uid < oldestTweetId) {
                 oldestTweetId = uid;
-            }
-            if (uid > newestTweetId) {
-                newestTweetId = uid;
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -61,15 +62,27 @@ public class Tweet {
         return body;
     }
 
-    public long getUid() {
-        return uid;
-    }
-
     public User getUser() {
         return user;
     }
 
     public String getRelativeTime() { return getRelativeTimeAgo(timestamp); }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public void setUid(long uid) {
+        this.uid = uid;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     // getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");
     private String getRelativeTimeAgo(String rawJsonDate) {

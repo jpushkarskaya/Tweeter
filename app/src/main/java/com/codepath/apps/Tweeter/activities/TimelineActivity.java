@@ -1,8 +1,11 @@
 package com.codepath.apps.Tweeter.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.codepath.apps.Tweeter.EndlessScrollListener;
@@ -16,18 +19,14 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cz.msebera.android.httpclient.Header;
-
-import static com.codepath.apps.Tweeter.models.Tweet.fromJSONArray;
 
 public class TimelineActivity extends AppCompatActivity {
 
+    private final int REQUEST_CODE = 20;
+
     private TwitterClient client;
     private ListView lvTweets;
-    private List<Tweet> tweets;
     private TweetArrayAdapter adapter;
 
     @Override
@@ -35,20 +34,39 @@ public class TimelineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
         lvTweets = (ListView) findViewById(R.id.lvTweets);
-        tweets = new ArrayList<>();
-        adapter = new TweetArrayAdapter(this, tweets);
+        adapter = new TweetArrayAdapter(this);
         lvTweets.setAdapter(adapter);
         lvTweets.setOnScrollListener(new EndlessScrollListener() {
             @Override
             public boolean onLoadMore(int page, int totalItemsCount) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to your AdapterView
-                populateTimeline(Tweet.oldestTweetId, 0);
+                populateTimeline(Tweet.oldestTweetId - 1, 0);
                 return true; // ONLY if more data is actually being loaded; false otherwise.
             }
         });
         client = TwitterApplication.getRestClient();
         populateTimeline(0, 1);
+    }
+
+    // Inflate the menu; this adds items to the action bar if it is present.
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_timeline, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_compose) {
+            Intent intent = new Intent(this, ComposeActivity.class);
+            startActivityForResult(intent, REQUEST_CODE);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     // Send an API request to get the timeline json
@@ -58,7 +76,7 @@ public class TimelineActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
                 Log.d("DEBUG", json.toString());
-                adapter.addAll(fromJSONArray(json));
+                adapter.addAll(Tweet.fromJSONArray(json));
                 adapter.notifyDataSetChanged();
             }
 
@@ -68,6 +86,19 @@ public class TimelineActivity extends AppCompatActivity {
             }
         }, maxId, sinceId);
 
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // REQUEST_CODE is defined above
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+
+            // Extract name value from result extras
+            Tweet tweet = (Tweet) data.getExtras().getSerializable("tweet");
+            int code = data.getExtras().getInt("code", 0);
+
+            adapter.insert(tweet, 0);
+            adapter.notifyDataSetChanged();
+        }
     }
 
 }

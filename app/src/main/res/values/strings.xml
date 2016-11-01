@@ -6,5 +6,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_timeline">Home Timeline</string>
     <string name="login_label">Connect To Twitter</string>
+    <string name="action_compose">Compose Tweet</string>
+    <string name="tweet_label">Tweet</string>
+    <string name="compose_hint">What\'s happening?</string>
 
 </resources>
