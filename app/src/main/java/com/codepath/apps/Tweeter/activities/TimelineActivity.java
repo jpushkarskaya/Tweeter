@@ -12,9 +12,13 @@ import android.view.MenuItem;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.apps.Tweeter.R;
+import com.codepath.apps.Tweeter.adapters.TweetArrayAdapter;
 import com.codepath.apps.Tweeter.fragments.HomeTimelineFragment;
 import com.codepath.apps.Tweeter.fragments.MentionsTimelineFragment;
+import com.codepath.apps.Tweeter.fragments.TweetsListFragment;
 import com.codepath.apps.Tweeter.models.Tweet;
+
+import java.util.List;
 
 public class TimelineActivity extends AppCompatActivity {
 
@@ -47,6 +51,9 @@ public class TimelineActivity extends AppCompatActivity {
         if (id == R.id.action_compose) {
             Intent intent = new Intent(this, ComposeActivity.class);
             startActivityForResult(intent, COMPOSE_CODE);
+        } else if (id == R.id.action_profile) {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -54,15 +61,15 @@ public class TimelineActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // COMPOSE_CODE is defined above
-        if (resultCode == RESULT_OK && requestCode == COMPOSE_CODE) {
+        if (resultCode == RESULT_OK) {
 
             // Extract name value from result extras
             int code = data.getExtras().getInt("code", 0);
-            if (code == COMPOSE_CODE) {
                 Tweet tweet = (Tweet) data.getExtras().getSerializable("tweet");
-                //adapter.insert(tweet, 0);
-                //adapter.notifyDataSetChanged();
-            }
+                List<Fragment> fragments = getSupportFragmentManager().getFragments();
+                TweetArrayAdapter adapter = ((TweetsListFragment) fragments.get(0)).getAdapter();
+                adapter.insert(tweet, 0);
+                adapter.notifyDataSetChanged();
         }
     }
 

@@ -7,7 +7,13 @@
     <string name="title_activity_timeline">Home Timeline</string>
     <string name="login_label">Connect To Twitter</string>
     <string name="action_compose">Compose Tweet</string>
+    <string name="action_profile">View Profile</string>
     <string name="tweet_label">Tweet</string>
     <string name="compose_hint">What\'s happening?</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+
+    <string name="label_tweets">Tweets</string>
+    <string name="label_following">Following</string>
+    <string name="label_followers">Followers</string>
 
 </resources>
