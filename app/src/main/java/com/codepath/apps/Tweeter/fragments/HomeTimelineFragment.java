@@ -1,7 +1,6 @@
 package com.codepath.apps.Tweeter.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +22,7 @@ import cz.msebera.android.httpclient.Header;
 public class HomeTimelineFragment extends TweetsListFragment {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View v  = super.onCreateView(inflater, parent, savedInstanceState);
         lvTweets.setOnScrollListener(new EndlessScrollListener() {
             @Override
