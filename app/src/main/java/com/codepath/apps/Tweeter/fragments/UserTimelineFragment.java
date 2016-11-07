@@ -26,7 +26,7 @@ public class UserTimelineFragment extends TweetsListFragment {
     }
 
     @Override
-    protected void populateTimeline(long maxId, long sinceId) {
+    protected void populateTimeline(long maxId) {
         String screenName = getArguments().getString("screen_name");
         client.getUserTimeline(new JsonHttpResponseHandler(){
 
@@ -40,7 +40,7 @@ public class UserTimelineFragment extends TweetsListFragment {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.d("DEBUG", errorResponse.toString());
             }
-        }, screenName);
+        }, screenName, maxId);
 
     }
 

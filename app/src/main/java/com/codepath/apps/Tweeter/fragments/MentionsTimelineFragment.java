@@ -17,7 +17,7 @@ import cz.msebera.android.httpclient.Header;
 public class MentionsTimelineFragment extends TweetsListFragment {
 
     @Override
-    protected void populateTimeline(long maxId, long sinceId) {
+    protected void populateTimeline(long maxId) {
         client.getMentionsTimeline(new JsonHttpResponseHandler(){
 
             @Override
@@ -30,7 +30,7 @@ public class MentionsTimelineFragment extends TweetsListFragment {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.d("DEBUG", errorResponse.toString());
             }
-        });
+        }, maxId);
 
     }
 }

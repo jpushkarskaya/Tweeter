@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.codepath.apps.Tweeter.EndlessScrollListener;
 import com.codepath.apps.Tweeter.R;
 import com.codepath.apps.Tweeter.activities.ProfileActivity;
 import com.codepath.apps.Tweeter.adapters.TweetArrayAdapter;
@@ -31,6 +32,15 @@ public abstract class TweetsListFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_tweets_list, parent, false);
         lvTweets = (ListView) v.findViewById(R.id.lvTweets);
         lvTweets.setAdapter(adapter);
+        lvTweets.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public boolean onLoadMore(int page, int totalItemsCount) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to your AdapterView
+                populateTimeline(adapter.getMaxId() - 1);
+                return true; // ONLY if more data is actually being loaded; false otherwise.
+            }
+        });
         lvTweets.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -48,10 +58,10 @@ public abstract class TweetsListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         adapter = new TweetArrayAdapter(getActivity());
         client = TwitterApplication.getRestClient();
-        populateTimeline(0, 1);
+        populateTimeline(Long.MAX_VALUE - 1);
     }
 
-    protected abstract void populateTimeline(long maxId, long sinceId);
+    protected abstract void populateTimeline(long maxId);
 
     public TweetArrayAdapter getAdapter(){
         return adapter;

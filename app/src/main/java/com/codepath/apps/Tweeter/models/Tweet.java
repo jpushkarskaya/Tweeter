@@ -19,8 +19,6 @@ import java.util.Locale;
 
 public class Tweet implements Serializable{
 
-    public static long oldestTweetId = Long.MAX_VALUE;
-
     private String body;
     private long uid;
     private User user;
@@ -35,9 +33,6 @@ public class Tweet implements Serializable{
             this.uid = json.getLong("id");
             this.user = new User(json.getJSONObject("user"));
             this.timestamp = json.getString("created_at");
-            if (uid < oldestTweetId) {
-                oldestTweetId = uid;
-            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -61,6 +56,8 @@ public class Tweet implements Serializable{
     public String getBody() {
         return body;
     }
+
+    public long getUid() { return uid; }
 
     public User getUser() {
         return user;

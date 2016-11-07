@@ -43,6 +43,10 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
         return convertView;
     }
 
+    public long getMaxId() {
+        return getItem(getCount() -1).getUid();
+    }
+
 
     private class ViewHolder {
         ImageView ivProfileImage;
